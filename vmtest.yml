@@ -1,0 +1,26 @@
+---
+- name:  Clone a virtual machine from Linux template and customize
+  vmware_guest:
+    hostname: "{{ vcenter_hostname }}"
+    username: "{{ vcenter_username }}"
+    password: "{{ vcenter_password }}"
+    esxi_hostname: "{{ exsi_hostname }}"
+    validate_certs: no
+    datacenter: "{{ datacenter }}"
+    state: present
+    folder: /test
+    template: "{{ template }}"
+    name: "{{ vm_name }}"
+    networks:
+      - name: VM Network
+        ip: 192.168.50.120
+        netmask: 255.255.255.0
+    wait_for_ip_address: True
+    customization:
+      domain: "{{ guest_domain }}"
+      dns_servers:
+        - 8.9.9.9
+        - 7.8.8.9
+      dns_suffix:
+        - kennedy.land
+  delegate_to: localhost
