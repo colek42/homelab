@@ -10,7 +10,6 @@
       password: "{{ vcenter_password }}"
       esxi_hostname: "{{ exsi_hostname }}"
       validate_certs: no
-      datacenter: "{{ datacenter }}"
       state: present
       folder: /test
       template: "{{ template }}"
@@ -21,7 +20,6 @@
           netmask: 255.255.255.0
       wait_for_ip_address: True
       customization:
-        domain: "{{ guest_domain }}"
         dns_servers:
           - 8.9.9.9
           - 7.8.8.9
