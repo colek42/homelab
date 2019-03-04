@@ -5,15 +5,15 @@
   tasks:
   - name:  Clone a virtual machine from Linux template and customize
     vmware_guest:
-      hostname: "{{ vcenter_hostname }}"
-      username: "{{ vcenter_username }}"
+      hostname: 192.168.50.50
+      username: Administrator@kennedy.land
       password: "{{ vcenter_password }}"
-      esxi_hostname: "{{ exsi_hostname }}"
+      esxi_hostname: 192.168.0.50
       validate_certs: no
       state: present
       folder: /test
-      template: "{{ template }}"
-      name: "{{ vm_name }}"
+      template: CoreDNS
+      name: testVM
       networks:
         - name: VM Network
           ip: 192.168.50.120
