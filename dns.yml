@@ -14,3 +14,5 @@
       name: coredns
     retries: 3
     delay: 3
+    become: true
+    become_method: sudo
