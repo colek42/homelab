@@ -35,6 +35,7 @@
     add_host:
       hostname: 192.168.50.100
       groups: vms
+      ansible_ssh_user: nkennedy
 
 - name: Check
   hosts: all
