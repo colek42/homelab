@@ -76,4 +76,4 @@
   service:
     name: coredns
     enabled: yes
-    state: started
+    state: restarted
