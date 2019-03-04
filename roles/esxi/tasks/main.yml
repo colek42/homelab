@@ -33,7 +33,7 @@
     ansible_ssh_pass: "{{ pass }}"
 
 - name: Check
-  hosts: dns
+  hosts: all
   tasks:
   - name: check
     shell: ip a
