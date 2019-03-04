@@ -11,7 +11,7 @@
       esxi_hostname: 192.168.0.50
       validate_certs: no
       state: present
-      folder: /test
+      folder: /
       template: CoreDNS
       name: testVM
       datacenter: Datacenter
