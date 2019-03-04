@@ -1,18 +1,22 @@
 ---
+- name: Configure ufw tcp
+  become: yes
+  ufw:
+    rule: allow
+    port: 53
+    proto: tcp
+
 - name: Configure Firewalld
   become: yes
-  firewalld:
-    port: "{{ item }}"
-    permanent: true
-    state: enabled
-  with_items:
-  - 53/tcp
-  - 53/udp
-
-- name: Bounce Firewalld
+  ufw:
+    rule: allow
+    port: 53
+    proto: udp
+    
+- name: Bounce UFW
   become: yes
   service:
-    name: firewalld
+    name: ufw
     enabled: yes
     state: restarted
 
