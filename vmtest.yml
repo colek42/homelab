@@ -40,10 +40,9 @@
       groups: vms
       ansible_ssh_user: nkennedy
 
-  - name: Check
+- name: Check
+  hosts: all
+  tasks:
+  - name: check
     shell: ip a
-
-  - name: IP address info
-    debug:
-      msg: "{{ newvm.instance.ipv4 }}"
 
