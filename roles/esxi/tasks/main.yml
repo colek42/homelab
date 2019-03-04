@@ -1,40 +1,36 @@
 ---
-- name: Create a VM from a template
-  hosts: localhost
-  gather_facts: no
-  tasks:
-  - name:  Clone Machine
-    vmware_guest:
-      hostname: 192.168.50.50
-      username: Administrator@kennedy.land
-      password: "{{ vcenter_password }}"
-      esxi_hostname: 192.168.0.50
-      validate_certs: no
-      state: present
-      folder: /
-      template: Ubuntu18.04
-      name: CoreDNS
-      datacenter: Datacenter
-      networks:
-        - name: VM Network
-          ip: 192.168.50.100
-          netmask: 255.255.255.0
-          gateway: 192.168.50.1
-      wait_for_ip_address: True
-      customization:
-        hostname: ns1
-        dns_servers:
-        dns_suffix:
-          - kennedy.land
-    register: newvm
-    delegate_to: localhost
+- name:  Clone Machine
+  vmware_guest:
+    hostname: 192.168.50.50
+    username: Administrator@kennedy.land
+    password: "{{ vcenter_password }}"
+    esxi_hostname: 192.168.0.50
+    validate_certs: no
+    state: present
+    folder: /
+    template: Ubuntu18.04
+    name: CoreDNS
+    datacenter: Datacenter
+    networks:
+      - name: VM Network
+        ip: 192.168.50.100
+        netmask: 255.255.255.0
+        gateway: 192.168.50.1
+    wait_for_ip_address: True
+    customization:
+      hostname: ns1
+      dns_servers:
+      dns_suffix:
+        - kennedy.land
+  register: newvm
+  delegate_to: localhost
 
-  - name: Dynamically add newly created VM to the inventory
-    add_host:
-      hostname: 192.168.50.100
-      groups: dns
-      ansible_ssh_user: nkennedy
-      ansible_ssh_pass: "{{ pass }}"
+- name: Dynamically add newly created VM to the inventory
+  add_host:
+    hostname: 192.168.50.100
+    groups: dns
+    ansible_ssh_user: nkennedy
+    ansible_ssh_pass: "{{ pass }}"
 
 - name: Check
   hosts: dns
