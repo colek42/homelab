@@ -24,8 +24,8 @@
       customization:
         hostname: testvm
         dns_servers:
-          - 8.9.9.9
-          - 7.8.8.9
+          - 8.8.8.8
+          - 8.8.4.4
         dns_suffix:
           - kennedy.land
     register: newvm
