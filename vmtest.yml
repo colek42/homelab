@@ -31,10 +31,6 @@
     register: newvm
     delegate_to: localhost
 
-  - name: add_ssh_key
-    
-
-
   - name: Dinamically add newly created VM to the inventory
     add_host:
       hostname: 192.168.50.100
