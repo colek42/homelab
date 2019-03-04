@@ -15,4 +15,7 @@ esxi      IN  A     192.168.0.50
 vcenter   IN  A     192.168.50.50
 router    IN  A     192.168.0.1
 awx       IN  A     192.168.50.101
+store     IN  A     192.168.50.102
+ingress   IN  A     192.168.100.2
+*         IN  CNAME ingress
           IN  AAAA  ::1

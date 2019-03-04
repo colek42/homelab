@@ -1,0 +1,54 @@
+---
+- hosts: localhost
+  tasks:
+  - name: New VM
+    include_role:
+      name: esxi
+
+- hosts: zfs
+  vars:
+    ansible_become_pass: "{{ pass }}"
+  tasks:
+  - name: Install and configure ZFS
+    include_role:
+      name: zfs
+    retries: 3
+    delay: 3
+    become: true
+    become_method: sudo
+
+- hosts: zfs
+  vars:
+    ansible_become_pass: "{{ pass }}"
+  tasks:
+  - name: Install and configure NFS
+    include_role:
+      name: nfs
+    retries: 3
+    delay: 3
+    become: true
+    become_method: sudo
+
+- hosts: zfs
+  vars:
+    ansible_become_pass: "{{ pass }}"
+  tasks:
+  - name: Install and configure samba share
+    include_role:
+      name: smb
+    retries: 3
+    delay: 3
+    become: true
+    become_method: sudo
+
+- hosts: zfs
+  vars:
+    ansible_become_pass: "{{ pass }}"
+  tasks:
+  - name: Install and configure iSCSI
+    include_role:
+      name: iscsi
+    retries: 3
+    delay: 3
+    become: true
+    become_method: sudo
