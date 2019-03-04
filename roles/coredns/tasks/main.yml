@@ -21,6 +21,7 @@
     state: restarted
 
 - replace:
+    become: yes
     path: /etc/systemd/resolved.conf
     regexp: '(\s+).DNSStubListener=.*(\s+.*)?$'
     replace: '\1#DNSStubListener=no\2'
