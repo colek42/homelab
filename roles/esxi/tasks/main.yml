@@ -31,9 +31,3 @@
     groups: dns
     ansible_ssh_user: nkennedy
     ansible_ssh_pass: "{{ pass }}"
-
-- name: Check
-  hosts: dns
-  tasks:
-  - name: check
-    shell: ip a

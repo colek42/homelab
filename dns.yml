@@ -4,3 +4,8 @@
   - name: New VM
     include_role:
       name: esxi
+
+- hosts: dns
+  tasks:
+  - name: check
+    shell: ip a
