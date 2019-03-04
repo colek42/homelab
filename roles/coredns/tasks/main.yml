@@ -12,7 +12,7 @@
     rule: allow
     port: 53
     proto: udp
-    
+
 - name: Bounce UFW
   become: yes
   service:
@@ -39,7 +39,7 @@
     mode: 0644
   with_items:
   - Corefile
-  - db.dev.io
+  - db.kennedy.land
 
 - name: Copy CoreDNS Service File
   become: yes
