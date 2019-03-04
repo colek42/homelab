@@ -12,7 +12,7 @@
       validate_certs: no
       state: present
       folder: /
-      template: CoreDNS
+      template: Ubuntu18.04
       name: testVM
       datacenter: Datacenter
       networks:
