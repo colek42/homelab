@@ -14,6 +14,7 @@
       folder: /test
       template: CoreDNS
       name: testVM
+      datacenter: Datacenter
       networks:
         - name: VM Network
           ip: 192.168.50.120
