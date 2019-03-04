@@ -20,6 +20,8 @@
     customization:
       hostname: ns1
       dns_servers:
+        - 8.8.8.8
+        - 8.8.4.4
       dns_suffix:
         - kennedy.land
   register: newvm
