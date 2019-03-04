@@ -1,7 +1,6 @@
 ---
-- name: Create a VM from a template
-  hosts: localhost
+- hosts: localhost
   gather_facts: no
   tasks:
     - name: createVM
-      include_role: esxi 
+      include_role: esxi
