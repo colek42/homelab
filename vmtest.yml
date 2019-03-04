@@ -36,7 +36,7 @@
       hostname: 192.168.50.100
       groups: vms
       ansible_ssh_user: nkennedy
-      ansible_ssh_private_key_file: '/home/nkennedy/.ssh/id_rsa'
+      ansible_ssh_password: "{{ pass }}"
 
 - name: Check
   hosts: all
