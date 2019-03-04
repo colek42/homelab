@@ -25,7 +25,7 @@
   replace:
     path: /etc/systemd/resolved.conf
     regexp: '(\s+).DNSStubListener=.*(\s+.*)?$'
-    replace: '\1#DNSStubListener=no\2'
+    replace: '\1DNSStubListener=no\2'
     backup: yes
 
 - name: Ensure CoreDNS Directory
