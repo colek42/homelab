@@ -1,0 +1,39 @@
+dev.io {
+    file db.kennedy.land
+    log
+}
+
+.:53 {
+    forward . 127.0.0.1:5301 127.0.0.1:5302 127.0.0.1:5303 [::1]:5301 [::1]:5302 [::1]:5303
+    log . {
+        class error
+    }
+    cache
+}
+
+# Quad9 DNS. Differentiator: Automatically blocks domains known to be associated with malicious activity
+
+.:5301 {
+    forward . tls://9.9.9.9 {
+        tls_servername dns.quad9.net
+    }
+    cache
+}
+
+# Cloudflare. Differentiator: Fast and uses EDNS Padding
+
+.:5302 {
+    forward . tls://1.1.1.1 tls://1.0.0.1 {
+        tls_servername tls.cloudflare-dns.com
+    }
+    cache
+}
+
+# Google. Differentiator: ... Google?
+
+.:5303 {
+    forward . tls://8.8.8.8 tls://8.8.4.4 {
+        tls_servername dns.google
+    }
+    cache
+}

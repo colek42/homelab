@@ -22,26 +22,22 @@
           gateway: 192.168.50.1
       wait_for_ip_address: True
       customization:
-        hostname: testvm
+        hostname: ns1
         dns_servers:
-          - 8.8.8.8
-          - 8.8.4.4
         dns_suffix:
           - kennedy.land
     register: newvm
     delegate_to: localhost
 
-  - name: Dinamically add newly created VM to the inventory
+  - name: Dynamically add newly created VM to the inventory
     add_host:
       hostname: 192.168.50.100
-      groups: vms
+      groups: dns
       ansible_ssh_user: nkennedy
       ansible_ssh_pass: "{{ pass }}"
 
 - name: Check
-  hosts: all
+  hosts: dns
   tasks:
   - name: check
     shell: ip a
-
-
