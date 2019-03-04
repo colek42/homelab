@@ -20,8 +20,9 @@
     enabled: yes
     state: restarted
 
-- replace:
-    become: yes
+- name: Disable resloved.conf
+  become: yes
+  replace:
     path: /etc/systemd/resolved.conf
     regexp: '(\s+).DNSStubListener=.*(\s+.*)?$'
     replace: '\1#DNSStubListener=no\2'
