@@ -31,7 +31,8 @@
     register: newvm
     delegate_to: localhost
 
-
+  - name: add_ssh_key
+    
 
 
   - name: Dinamically add newly created VM to the inventory
@@ -39,6 +40,7 @@
       hostname: 192.168.50.100
       groups: vms
       ansible_ssh_user: nkennedy
+      ansible_ssh_private_key: /home/nkennedy/.ssh/id_rsa
 
 - name: Check
   hosts: all
