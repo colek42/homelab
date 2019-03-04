@@ -10,6 +10,7 @@ $ORIGIN kennedy.land.
         3600 IN NS a.iana-servers.net.
         3600 IN NS b.iana-servers.net.
 
+ns1       IN  A     192.168.50.100
 esxi      IN  A     192.168.0.50
 vcenter   IN  A     192.168.50.50
 router    IN  A     192.168.0.1

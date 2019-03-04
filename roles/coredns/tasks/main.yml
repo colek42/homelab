@@ -6,7 +6,7 @@
     port: 53
     proto: tcp
 
-- name: Configure Firewalld
+- name: Configure ufw udp
   become: yes
   ufw:
     rule: allow
