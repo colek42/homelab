@@ -20,6 +20,12 @@
     enabled: yes
     state: restarted
 
+- replace:
+    path: /etc/systemd/resolved.conf
+    regexp: '(\s+).DNSStubListener=.*(\s+.*)?$'
+    replace: '\1#DNSStubListener=no\2'
+    backup: yes
+
 - name: Ensure CoreDNS Directory
   become: yes
   file:
