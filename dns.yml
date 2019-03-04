@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  tasks:
+    - name: New VM
+      include_role:
+        name: esxi

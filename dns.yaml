@@ -1,6 +1,0 @@
----
-- hosts: localhost
-  gather_facts: no
-  tasks:
-    - name: createVM
-      include_role: esxi
