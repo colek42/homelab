@@ -1,7 +1,6 @@
 ---
 - hosts: localhost
   vars:
-    esxi_hostname: esxi.kennedy.land
     vcenter_folder: infra
     template: Ubuntu18.04
     vm_name: store
@@ -11,6 +10,7 @@
     vm_ip: 192.168.50.102
     vm_dns_1: 192.168.50.100
     vm_dns_2: 8.8.8.8
+    dns_suffix: kennedy.land
     group: store
   tasks:
   - name: New VM

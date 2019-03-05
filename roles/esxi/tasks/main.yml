@@ -12,8 +12,8 @@
     name: "{{ vm_name }}"
     datacenter: "{{ host_datacenter }}"
     hardware:
-      - memory_mb: {{ vm_memory_mb }}
-      - num_cpus: {{ vm_cpus }}
+      - memory_mb: "{{ vm_memory_mb }}"
+      - num_cpus: "{{ vm_cpus }}"
     networks:
       - name: "{{ vm_network }}"
         ip: "{{ vm_ip }}"
@@ -26,13 +26,13 @@
         - "{{ vm_dns_1 }}"
         - "{{ vm_dns_2 }}"
       dns_suffix:
-        - "{{ dns_suffex }}"
+        - "{{ dns_suffix }}"
   register: "{{ vm_name }}"
   delegate_to: localhost
 
 - name: Dynamically add newly created VM to the inventory
   add_host:
     hostname: "{{ vm_ip }}"
-    groups: "{{ vcenter_folder }}"
+    groups: "{{ group }}"
     ansible_ssh_user: nkennedy
     ansible_ssh_pass: "{{ pass }}"
