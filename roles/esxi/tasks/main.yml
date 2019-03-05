@@ -12,7 +12,7 @@
     name: "{{ vm_name }}"
     datacenter: "{{ host_datacenter }}"
     hardware:
-      - memory_mb: "{{ vm_memory_mb }}"
+        memory_mb: "{{ vm_memory_mb }}"
         num_cpus: "{{ vm_cpus }}"
     networks:
       - name: "{{ vm_network }}"
