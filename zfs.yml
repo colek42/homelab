@@ -9,6 +9,7 @@
     vm_network: VM Network
     vm_ip: 192.168.50.102
     vm_netmask: 255.255.255.0
+    vm_gateway: 192.168.50.1
     vm_dns_1: 192.168.50.100
     vm_dns_2: 8.8.8.8
     dns_suffix: kennedy.land
