@@ -12,6 +12,7 @@
     name: "{{ vm_name }}"
     datacenter: "{{ host_datacenter }}"
     hardware:
+        memory_reservation_lock: "{{ memory_reservation_lock }}"
         memory_mb: "{{ vm_memory_mb }}"
         mem_limit: "{{ vm_memory_mb }}"
         num_cpus: "{{ vm_cpus }}"
