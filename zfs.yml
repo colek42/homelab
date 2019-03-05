@@ -1,11 +1,23 @@
 ---
 - hosts: localhost
+  vars:
+    esxi_hostname: esxi.kennedy.land
+    vcenter_folder: infra
+    template: Ubuntu18.04
+    vm_name: store
+    vm_memory_mb: 4096
+    vm_cpus: 2
+    vm_network: VM Network
+    vm_ip: 192.168.50.102
+    vm_dns_1: 192.168.50.100
+    vm_dns_2: 8.8.8.8
+    group: store
   tasks:
   - name: New VM
     include_role:
       name: esxi
 
-- hosts: zfs
+- hosts: store
   vars:
     ansible_become_pass: "{{ pass }}"
   tasks:

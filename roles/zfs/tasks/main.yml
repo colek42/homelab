@@ -1,0 +1,11 @@
+---
+- name: Install zfs package
+  become: yes
+  apt:
+    name: zfsutils-linux
+    update_cache: yes
+    state: latest
+
+- name: import zpool
+  become: yes
+  command: zpool import {{ pool_name }}

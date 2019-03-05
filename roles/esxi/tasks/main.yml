@@ -1,35 +1,38 @@
 ---
 - name:  Clone Machine
   vmware_guest:
-    hostname: 192.168.50.50
-    username: Administrator@kennedy.land
+    hostname: "{{ vcenter_hostname }}"
+    username: "{{ vcenter_username }}"
     password: "{{ vcenter_password }}"
-    esxi_hostname: 192.168.0.50
+    esxi_hostname: "{{ esxi_hostname }}"
     validate_certs: no
     state: present
-    folder: /
-    template: Ubuntu18.04
-    name: CoreDNS
-    datacenter: Datacenter
+    folder: "{{ vcenter_folder }}"
+    template: "{{ host_template }}"
+    name: "{{ vm_name }}"
+    datacenter: "{{ host_datacenter }}"
+    hardware:
+      - memory_mb: {{ vm_memory_mb }}
+      - num_cpus: {{ vm_cpus }}
     networks:
-      - name: VM Network
-        ip: 192.168.50.100
-        netmask: 255.255.255.0
-        gateway: 192.168.50.1
+      - name: "{{ vm_network }}"
+        ip: "{{ vm_ip }}"
+        netmask: "{{ vm_netmask }}"
+        gateway: "{{ vm_gateway }}"
     wait_for_ip_address: True
     customization:
-      hostname: ns1
+      hostname: "{{ vm_name }}"
       dns_servers:
-        - 8.8.8.8
-        - 8.8.4.4
+        - "{{ vm_dns_1 }}"
+        - "{{ vm_dns_2 }}"
       dns_suffix:
-        - kennedy.land
-  register: newvm
+        - "{{ dns_suffex }}"
+  register: "{{ vm_name }}"
   delegate_to: localhost
 
 - name: Dynamically add newly created VM to the inventory
   add_host:
-    hostname: 192.168.50.100
-    groups: dns
+    hostname: "{{ vm_ip }}"
+    groups: "{{ vcenter_folder }}"
     ansible_ssh_user: nkennedy
     ansible_ssh_pass: "{{ pass }}"
