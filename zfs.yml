@@ -2,7 +2,7 @@
 - hosts: localhost
   vars:
     vcenter_folder: infra
-    template: Ubuntu18.04
+    host_template: Ubuntu18.04
     vm_name: store
     vm_memory_mb: 4096
     vm_cpus: 2
