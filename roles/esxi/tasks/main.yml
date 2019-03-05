@@ -1,5 +1,5 @@
 ---
-- name:  Clone Machine
+- name: Clone Machine
   vmware_guest:
     hostname: "{{ vcenter_hostname }}"
     username: "{{ vcenter_username }}"
