@@ -9,3 +9,40 @@
 - name: import zpool
   become: yes
   command: zpool import {{ pool_name }}
+
+
+#sudo zfs create -o compression=off -o dedup=off -o volblocksize=32K -V 2T Pool1/iscsi
+
+#iSCSI
+- name: Configure ufw tcp
+  become: yes
+  ufw:
+    rule: allow
+    port: 3260
+
+- name: Bounce UFW
+  become: yes
+  service:
+    name: ufw
+    enabled: yes
+    state: restarted
+
+- name: installing iscisi requirements
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+   - targetcli-fb
+
+- name: template and copy iscisi config
+  template:
+    src: etc/rtslib-fb-target/templates/saveconfig.json.j2
+    dest: /etc/rtslib-fb-target/saveconfig.json
+    force: true
+    mode: 600
+    group: root
+    owner: root
+    become: yes
+
+- name: restore iscsi config
+  command: sudo targetctl restore /etc/rtslib-fb-target/saveconfig.json
