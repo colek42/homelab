@@ -38,7 +38,7 @@
 
 - name: template and copy iscisi config
   template:
-    src: templates/etc/rtslib-fb-target/templates/saveconfig.json.j2
+    src: templates/etc/rtslib-fb-target/saveconfig.json.j2
     dest: /etc/rtslib-fb-target/saveconfig.json
     force: true
     mode: 600
