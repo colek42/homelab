@@ -9,6 +9,8 @@
 - name: import zpool
   become: yes
   command: zpool import {{ pool_name }}
+  register: command_result
+  failed_when: "'no such pool available' in command_result.stderr"
 
 
 #sudo zfs create -o compression=off -o dedup=off -o volblocksize=32K -V 2T Pool1/iscsi
