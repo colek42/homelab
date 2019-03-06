@@ -44,7 +44,6 @@
     mode: 600
     group: root
     owner: root
-    become: yes
 
 - name: restore iscsi config
   command: sudo targetctl restore /etc/rtslib-fb-target/saveconfig.json
