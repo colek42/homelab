@@ -37,6 +37,7 @@
    - targetcli-fb
 
 - name: template and copy iscisi config
+  become: yes
   template:
     src: templates/etc/rtslib-fb-target/saveconfig.json.j2
     dest: /etc/rtslib-fb-target/saveconfig.json
@@ -46,4 +47,5 @@
     owner: root
 
 - name: restore iscsi config
-  command: sudo targetctl restore /etc/rtslib-fb-target/saveconfig.json
+  become: yes
+  command: targetctl restore /etc/rtslib-fb-target/saveconfig.json
