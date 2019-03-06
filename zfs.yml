@@ -31,7 +31,7 @@
       name: zfs
     retries: 3
     delay: 3
-    become: true
+    become: yes
     become_method: sudo
 
 # - hosts: zfs
