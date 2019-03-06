@@ -23,6 +23,8 @@
 - hosts: store
   vars:
     ansible_become_pass: "{{ pass }}"
+    iscsi_user: "{{ iscsi_user }}"
+    iscsi_pass: "{{ iscsi_pass }}"
   tasks:
   - name: Install and configure ZFS
     include_role:
