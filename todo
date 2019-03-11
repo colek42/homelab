@@ -1,0 +1,16 @@
+https://medium.com/@jackprice/pushing-kickstarts-with-ansible-122b2cd9c1e
+
+Infra:
+
+1. Kickstart instead of clone
+2. Configure SSH Keys (vault?)
+3. Install
+    - Docker
+    - X NTP
+    - Auditd
+? 4.  Etcd (For DNS/vault)
+? 5.  Configure DNS automatically (LEDNS?)
+
+Cluster
+1. Template RKE
+ 

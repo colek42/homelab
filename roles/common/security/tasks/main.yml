@@ -1,0 +1,62 @@
+---
+- name: Tune kernel security settings
+  sysctl:
+    name: '{{ item.name }}'
+    value: '{{ item.value }}'
+    state: present
+    reload: yes
+  become: yes
+  loop:
+    - { name : 'net.ipv4.tcp_syncookies', value : '1' }                    # Enable syn flood protection
+    - { name : 'net.ipv4.conf.all.accept_source_route', value : '0' }      # Ignore source-routed packets
+    - { name : 'net.ipv6.conf.all.accept_source_route', value : '0' }      # IPv6 - Ignore ICMP redirects
+    - { name : 'net.ipv4.conf.default.accept_source_route', value : '0' }  # Ignore source-routed packets
+    - { name : 'net.ipv4.conf.all.accept_redirects', value : '0' }         # IPv6 - Ignore ICMP redirects
+    - { name : 'net.ipv4.conf.default.accept_redirects', value : '0' }     # Ignore ICMP redirects
+    - { name : 'net.ipv6.conf.default.accept_redirects', value : '0' }     # IPv6 - Ignore ICMP redirects
+    - { name : 'net.ipv4.conf.all.secure_redirects', value : '0' }         # Ignore ICMP redirects from non-GW hosts
+    - { name : 'net.ipv4.conf.all.send_redirects', value : '0' }           # Don't allow traffic between networks or act as a router
+    - { name : 'net.ipv4.conf.all.rp_filter', value : '1' }                # Reverse path filtering - IP spoofing protection
+    - { name : 'net.ipv4.conf.default.rp_filter', value : '1' }            # Reverse path filtering - IP spoofing protection
+    - { name : 'net.ipv4.icmp_echo_ignore_broadcasts', value : '1' }       # Ignore ICMP broadcasts to avoid participating in Smurf attacks
+    - { name : 'net.ipv4.icmp_ignore_bogus_error_responses', value : '1' } # Ignore bad ICMP errors
+    - { name : 'net.ipv4.icmp_echo_ignore_all', value : '0' }              # Ignore bad ICMP errors
+    - { name : 'net.ipv4.conf.all.log_martians', value : '1' }             # Log spoofed, source-routed, and redirect packets
+    - { name : 'net.ipv4.conf.default.log_martians', value : '1' }         # Log spoofed, source-routed, and redirect packets
+    - { name : 'net.ipv4.tcp_rfc1337', value : '1' }                       # Implement RFC 1337 fix
+    - { name : 'kernel.randomize_va_space', value : '2' }                  # Randomize addresses of mmap base, heap, stack and VDSO page
+    - { name : 'fs.protected_hardlinks', value : '1' }                     # Provide protection from ToCToU races
+    - { name : 'fs.protected_symlinks', value : '1' }                      # Provide protection from ToCToU races
+    - { name : 'kernel.kptr_restrict', value : '1' }                       # Make locating kernel addresses more difficult
+    - { name : 'kernel.perf_event_paranoid', value : '2' }                 # Set perf only available to root
+    # Allow for kubernetes
+    - { name : 'net.ipv6.conf.default.forwarding', value: '1' }            # Allow packet forwarding for k8s
+    - { name : 'net.ipv4.ip_forward', value : '1' }                        # Allow packet forwarding for k8s
+    - { name : 'net.ipv6.conf.all.forwarding', value : '1'}                # Allow packet forwarding for k8s
+
+- name: Update APT package cache
+  apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Delete root pw file /root/.pw (if present)
+  file:
+    path: /root/.pw
+    state: absent
+
+- name: Install aptitude
+  apt:
+    pkg: aptitude
+    state: present
+
+- name: Adjust APT update intervals
+  copy:
+    src: etc/apt/apt.conf.d/10periodic
+    dest: /etc/apt/apt.conf.d/10periodic
+    owner: root
+    group: root
+    mode: 0644
+
+
+# UFW Rules
+# make user account, add to sudoers, ssh key

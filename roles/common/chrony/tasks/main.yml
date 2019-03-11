@@ -1,0 +1,32 @@
+---
+- name: Include os-specific vars
+  include_vars: 'ubuntu.yml'
+
+- name: Update apt-get cache
+  apt:
+    update_cache: yes
+  become: yes
+
+- name: Install chrony related packages
+  apt:
+    name: '{{ item }}'
+    state: present
+  become: yes
+  with_items:
+    - chrony
+
+- name: Install chrony.conf from template
+  template:
+    src: templates/chrony.conf.j2
+    dest: '{{ chrony_conf_file }}'
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+
+- name: Restart chrony service
+  systemd:
+    name: '{{ chrony_service_name }}'
+    enabled: yes
+    state: restarted
+  become: yes

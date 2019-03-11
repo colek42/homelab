@@ -1,0 +1,35 @@
+---
+#
+# Author: Matthew DeVenny
+#
+# tune kernel parameters for docker
+# based on:
+# - https://success.docker.com/article/node-using-swap-memory-instead-of-host-memory
+# - https://github.com/clemenko/best_practices
+
+- name: Tune kernel performance settings
+  sysctl:
+    name: '{{ item.name }}'
+    value: '{{ item.value }}'
+    state: present
+    reload: yes
+  become: yes
+  loop:
+    - { name : 'vm.swappiness', value : '0' }
+    - { name : 'vm.overcommit_memory', value : '1' }
+    - { name : 'net.ipv4.neigh.default.gc_thresh1', value : '80000' }
+    - { name : 'net.ipv4.neigh.default.gc_thresh2', value : '90000' }
+    - { name : 'net.ipv4.neigh.default.gc_thresh3', value : '100000' }
+    - { name : 'net.ipv4.tcp_keepalive_time', value : '600' }
+    - { name : 'net.ipv4.ip_forward', value : '1' }
+
+# This task disables swap for Kubernetes node (see https://github.com/kubernetes/kubernetes/pull/31996)
+- name: Remove swapfile from /etc/fstab
+  become: yes
+  mount:
+    name: swap
+    fstype: swap
+    state: absent
+- name: Disable swap
+  become: yes
+  command: swapoff -a

@@ -1,0 +1,4 @@
+---
+# Defaults file for Docker-CE installation
+docker_version: "18.06.3*"
+docker_users: []

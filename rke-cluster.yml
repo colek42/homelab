@@ -1,0 +1,57 @@
+---
+- hosts: rke-cluster
+  gather_facts: false
+  connection: local
+
+  vars_prompt:
+    - name: "vcenter_password"
+      prompt: "vCenter Password"
+
+
+  tasks:
+  - name: Create VMs
+    include_role:
+      name: esxi
+
+- hosts: rke-cluster
+  gather_facts: true
+
+  vars_prompt:
+    - name: "ansible_sudo_pass"
+      prompt: "guest sudo password"
+
+  tasks:
+
+  - name: Upgrade hosts
+    become: yes
+    apt:
+      update_cache: yes
+      upgrade: yes
+
+  - name: Configure Chrony
+    include_role:
+      name: common/chrony
+
+  - name: Configure Docker
+    include_role:
+      name: common/docker
+
+  - name: Tune Kernel
+    include_role:
+      name: common/kernel
+
+
+
+
+# - hosts: dns
+#   vars:
+#     coredns_ver: "1.4.0"
+#     ansible_become_pass: "{{ pass }}"
+#   tasks:
+#   - name: Install and Configure CoreDNS
+#     include_role:
+#       name: coredns
+#     retries: 3
+#     delay: 3
+#     become: true
+#     become_method: sudo

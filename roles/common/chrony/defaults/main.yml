@@ -1,0 +1,16 @@
+---
+# defaults
+chrony_servers:
+  - "server 0.pool.ntp.org offline iburst"
+  - "server 1.pool.ntp.org offline iburst"
+  - "server 2.pool.ntp.org offline iburst"
+  - "server 3.pool.ntp.org offline iburst"
+# platform settings (overriden in vars)
+chrony_service_name: 'chronyd'
+chrony_driftfile: '/var/lib/chrony/drift'
+chrony_keyfile: '/etc/chrony/chrony.keys'
+chrony_conf_file: '/etc/chrony.conf'
+chrony_log: 'tracking measurements statistics'
+chrony_logdir: '/var/log/chrony'
+chrony_maxupdateskew: 100.0
+chrony_dumpdir: '/var/lib/chrony'
