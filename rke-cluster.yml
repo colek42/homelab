@@ -6,19 +6,30 @@
   vars_prompt:
     - name: "vcenter_password"
       prompt: "vCenter Password"
-
-
+    
   tasks:
   - name: Create VMs
     include_role:
       name: esxi
 
 - hosts: rke-cluster
-  gather_facts: true
 
   vars_prompt:
-    - name: "ansible_sudo_pass"
-      prompt: "guest sudo password"
+  - name: "ansible_sudo_pass"
+    prompt: "guest sudo password"
+
+  tasks:
+  - name: SSH config
+    include_role:
+      name: common/ssh
+
+
+
+
+- hosts: rke-cluster
+  gather_facts: true
+  vars:
+    - ansible_user: "{{ deploy_user }}"
 
   tasks:
 

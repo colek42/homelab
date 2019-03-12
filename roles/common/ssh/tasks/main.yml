@@ -1,0 +1,44 @@
+- name: Add deploy user
+  become: yes
+  user:
+    name: deploy
+    password: "{{ deploy_user_password }}"
+    uid: 9999
+    shell: /bin/bash
+    home: /home/deploy
+
+- name: Add deploy user to sudoers
+  become: yes
+  lineinfile:
+    dest: /etc/sudoers
+    regexp: deploy ALL
+    line: deploy ALL=(ALL) NOPASSWD:ALL # passwordless sudo
+    state: present
+
+- name: Set authorized keys taken from url
+  become: yes
+  authorized_key:
+    user: "{{ deploy_user }}"
+    state: present
+    exclusive: True
+    key: "{{ deploy_user_pubkey_url }}"
+
+- name: Delete root pw file /root/.pw (if present)
+  become: yes
+  file:
+    path: /root/.pw
+    state: absent
+
+- name: Ensure sshd_config setting
+  become: yes
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "{{ item.re }}"
+    line: "{{ item.value }}"
+    state: "present"
+  notify: "restart ssh"
+  loop:
+    - { re: '^PasswordAuthentication', value: 'PasswordAuthentication no' }  # Disable password authentication
+    - { re: '^PermitRootLogin', value: 'PermitRootLogin no' }                # Disable SSH root login
+    - { re: '^PermitTunnel', value: 'PermitTunnel no' }                      # Disable tun(4) device forwarding
+    - { re: '^Port', value: 'Port 22' }                                      # Set SSHd port

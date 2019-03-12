@@ -1,9 +1,11 @@
 home:
   vars:
+    deploy_user_password: password
+    deploy_user: deploy
+    deploy_user_pubkey_url: https://github.com/colek42.keys
     ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
     esxi_hostname: 192.168.0.50
     host_datacenter: Datacenter
-    iscsi_user: nkennedy
     pool_name: Pool1
     vcenter_hostname: 192.168.50.50
     vcenter_username: Administrator@kennedy.land
@@ -22,6 +24,8 @@ home:
     zfs:
       hosts:
         192.168.50.102
+      vars:
+        iscsi_user: nkennedy
     rke-cluster:
       children:
         masters:

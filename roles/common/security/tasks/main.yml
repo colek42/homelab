@@ -1,4 +1,26 @@
 ---
+- name: Add deploy user
+  user:
+    name: deploy
+    password: "{{ deploy_user_password }}"
+    uid: 9999
+    shell: /bin/bash
+    home: /home/deploy
+
+- name: Add deploy user to sudoers
+  lineinfile:
+    dest: /etc/sudoers
+    regexp: deploy ALL
+    line: deploy ALL=(ALL) NOPASSWD:ALL
+    state: present
+
+- name: Set authorized keys taken from url
+  authorized_key:
+    user: deploy
+    state: present
+    exclusive: True
+    key: {{ deploy_user_pubkey_url }}
+
 - name: Tune kernel security settings
   sysctl:
     name: '{{ item.name }}'
